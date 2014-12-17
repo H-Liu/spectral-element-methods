@@ -482,11 +482,12 @@ def genConn(Ne,Npm,ne,npe,x,y,L,W,U0,h,tipo='quad'):
 
     # Calcula el numero de nodos globales para definir el tamano de las matrices contenedoras
     if(tipo == 'quad'):
-        ng = ne*npe - ((Ne[0]-1)*(Npm[1]+1)+(Ne[1]-1)*(Npm[0]+1)+(Ne[0]-1)*(Ne[1]-1)*(sum(Npm)+1))
+        ng = ne*npe - ((Ne[0]-1)*(Npm[1]+1)+(Ne[1]-1)*(Npm[0]+1)
+                       +(Ne[0]-1)*(Ne[1]-1)*(sum(Npm)+1))
     elif(tipo == 'tri'):
         ng = ne*npe - ((ne/2+Ne[0]+Ne[1]-2)*(Npm+1)+(Ne[0]-1)*(Ne[1]-1)*(2*Npm+1))    
 
-    coords = np.zeros([ng,2])   # Almacena las coordenadas de todos los nodos en un vector sin redundancia
+    coords = np.zeros([ng,2])   # Almacena las coordenadas de todos los nodos sin redundancia
     C = np.zeros((ne,npe),int)   # Matriz de conectividad
     gfl = np.zeros([ng,3])   # Indicador de nodos de frontera [indicador, vel. x, vel. y]
 
@@ -538,7 +539,7 @@ def matDiff(Ne,Np,ne,npe,ng,x,y,C,gfl,mu=1):
     NQ = (Np[0]+2)*(Np[1]+2)   # Numero de nodos a usar en la cuadratura
 
     (ix,iy) = np.meshgrid(range(Np[0]+2),range(Np[1]+2),indexing='xy')
-    M_ind = np.array([ix.reshape(NQ),iy.reshape(NQ)]).T   # Matriz de indices para la cuadratura
+    M_ind = np.array([ix.reshape(NQ),iy.reshape(NQ)]).T   # Indices para la cuadratura
 
     Mat_dif = np.zeros([2*ng+ne,2*ng+ne])   # Inicializa la matriz de difusion global
 
@@ -550,7 +551,7 @@ def matDiff(Ne,Np,ne,npe,ng,x,y,C,gfl,mu=1):
             psi = np.ones(npe)   # Almacena las funciones de interpolacion
             dpsixi = np.zeros(npe)   # Almacena las derivadas con respecto a xi
             dpsieta = np.zeros(npe)   # Almacena las derivadas con respecto a eta
-            grpsi = np.zeros([npe,2])   # Almacena los gradientes de las funciones de interpolacion
+            grpsi = np.zeros([npe,2])   # Almacena los gradientes de las funciones
             dxdxi = 0.
             dxdeta = 0.
             dydxi = 0.
@@ -673,7 +674,7 @@ def matDiffTri(Ne,m,ne,npe,ng,x,y,C,gfl,mu=1):
             psi = np.ones(npe)   # Almacena las funciones de interpolacion
             dpsixi = np.zeros(npe)   # Almacena las derivadas con respecto a xi
             dpsieta = np.zeros(npe)   # Almacena las derivadas con respecto a eta
-            grpsi = np.zeros([npe,2])   # Almacena los gradientes de las funciones de interpolacion
+            grpsi = np.zeros([npe,2])   # Almacena los gradientes de las funciones
             dxdxi = 0.
             dxdeta = 0.
             dydxi = 0.
